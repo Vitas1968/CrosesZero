@@ -15,15 +15,15 @@ public class TicTacToe
         initMap();
         printMap();
 
-//        while(true)
-//        {
-//            humanTurn(); //ход человека
-//            if(isEndGame(DOT_X)){ break;} // проверка окончания игры
-//
-//            computerTurn(); // ход компьютера
-//            if(isEndGame(DOT_O)) {break;} // проверка окончания игры
-//        }
-//        System.out.println("Игра окончена");
+        while(true)
+        {
+            humanTurn(); //ход человека
+            if(isEndGame(DOT_X)){ break;} // проверка окончания игры
+
+            computerTurn(); // ход компьютера
+            if(isEndGame(DOT_O)) {break;} // проверка окончания игры
+        }
+        System.out.println("Игра окончена");
 
 
     }
@@ -53,6 +53,57 @@ public class TicTacToe
 
         System.out.println();
     }
+
+    private static void humanTurn()
+    {
+        int x, y;
+        do
+        {
+            System.out.println("Введите координаты ячейки (X Y) через пробел");
+            y = scanner.nextInt() - 1; // Считывание номера строки
+            x = scanner.nextInt() - 1; // Считывание номера столбца
+        }
+        while (!isCellValid(x, y));
+
+        map[y][x] = DOT_X;
+    }
+
+
+    //проверка валидности введеных данных
+
+    public static boolean isCellValid(int x, int y){
+        boolean result = true;
+
+        //проверка координат
+        if(x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
+            result = false;
+        }
+
+        // проверка что ячейка пустая
+        if(map[y][x] != DOT_EMPTY){
+            result = false;
+        }
+
+        return result;
+    }
+
+    //Проверка окончания игры
+
+    private static boolean isEndGame(char playerSymbol)
+    { boolean result = false;
+
+    printMap();
+
+    if (chekWin() == playerSymbol)
+    {
+        System.out.println("Победили " +playerSymbol);
+        result=true;
+    }
+
+        return result;
+    }
+
+
 
 
 }
