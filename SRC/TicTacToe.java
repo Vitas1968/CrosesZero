@@ -5,8 +5,6 @@ public class TicTacToe
     private  static char DOT_EMTY = '*'; // пустое поле
     private  static char DOT_X = 'X';   // символ Х
     private  static char DOT_O = 'O';   //  символ О
-    private  static char DOT_GG = 'G';   //  sdfdsf
-
     public static void main(String[] args)
     {
 
