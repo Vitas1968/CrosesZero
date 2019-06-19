@@ -20,14 +20,15 @@ public class TicTacToe
             humanTurn(); //ход человека
             if(isEndGame(DOT_X)){ break;} // проверка окончания игры
 
-            computerTurn(); // ход компьютера
-            if(isEndGame(DOT_O)) {break;} // проверка окончания игры
+            //computerTurn(); // ход компьютера
+           // if(isEndGame(DOT_O)) {break;} // проверка окончания игры
         }
         System.out.println("Игра окончена");
 
 
     }
 
+    //заполнение массива пустыми символами
     private static void initMap() {
         map = new char[SIZE][SIZE];
         for(int i = 0; i < SIZE; i ++){
@@ -37,6 +38,7 @@ public class TicTacToe
         }
     }
 
+    // вывод поля на экран
     private static void printMap() {
         for(int i = 0; i <= SIZE; i++){
             System.out.print(i + "  ");
@@ -54,6 +56,7 @@ public class TicTacToe
         System.out.println();
     }
 
+    // ход человека
     private static void humanTurn()
     {
         int x, y;
@@ -80,9 +83,11 @@ public class TicTacToe
         }
 
         // проверка что ячейка пустая
-        if(map[y][x] != DOT_EMPTY){
-            result = false;
-        }
+        // исключение выхода за пределы массива при некорректных координатах
+//        if(map[y][x] != DOT_EMPTY)
+//        {
+//            result = false;
+//        }
 
         return result;
     }
@@ -94,14 +99,59 @@ public class TicTacToe
 
     printMap();
 
-    if (chekWin() == playerSymbol)
+    if (checkWin(playerSymbol))
     {
         System.out.println("Победили " +playerSymbol);
         result=true;
     }
 
+    if (isMapFull())
+    {
+        System.out.println("Ничья");
+        result=true;
+    }
+
         return result;
     }
+
+    private static boolean isMapFull()
+    { boolean result=true;
+
+        for (int i = 0; i < SIZE; i++)
+        {
+            for (int j = 0; j < SIZE; j++)
+            {
+                if (map[i][j]==DOT_EMPTY)
+                {
+                    result = false;
+                }
+
+            }
+        }
+        {
+
+        }
+
+      return result;
+    }
+
+    static boolean checkWin(char playerSymbol) {
+        boolean result = false;
+
+        if((map[0][0] == playerSymbol && map[0][1] == playerSymbol && map[0][2] == playerSymbol) ||
+                (map[1][0] == playerSymbol && map[1][1] == playerSymbol && map[1][2] == playerSymbol) ||
+                (map[2][0] == playerSymbol && map[2][1] == playerSymbol && map[2][2] == playerSymbol) ||
+                (map[0][0] == playerSymbol && map[1][0] == playerSymbol && map[2][0] == playerSymbol) ||
+                (map[0][1] == playerSymbol && map[1][1] == playerSymbol && map[2][1] == playerSymbol) ||
+                (map[0][2] == playerSymbol && map[1][2] == playerSymbol && map[2][2] == playerSymbol) ||
+                (map[0][0] == playerSymbol && map[1][1] == playerSymbol && map[2][2] == playerSymbol) ||
+                (map[2][0] == playerSymbol && map[1][1] == playerSymbol && map[0][2] == playerSymbol)){
+            result = true;
+        }
+
+        return result;
+    }
+
 
 
 
