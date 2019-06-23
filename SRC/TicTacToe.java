@@ -12,6 +12,7 @@ public class TicTacToe
     private static final boolean SILLY_MODE = false; // режим глупого/"умного" компьютера
     private static Scanner scanner = new Scanner(System.in); //считывание с клавиатуры
     private static Random random = new Random();
+    private  static boolean SCORING_MODE = false;
 
 
     public static void main(String[] args)
@@ -85,11 +86,89 @@ public class TicTacToe
                 y = random.nextInt(SIZE);
             } while(!isCellValid(x, y));
         }
-        else{
-            for(int i = 0; i < SIZE; i++){
-                for(int j = 0; j < SIZE; j++){
-                    // Проверяем клетки по направлениям
+        else
+        {
+
+            if (!SCORING_MODE)
+            { boolean moveFound=false;
+                for (int i = 0; i < SIZE; i++)
+                {
+                    for (int j = 0; j < SIZE; j++)
+                    {
+                        // упрощенный алгоритм
+                        if (map[i][j]==DOT_EMPTY)
+                        {
+                            // слева сверху
+                            if (i-1>=0 && j-1>=0 && map[i-1][j-1]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("LU");
+                                // верх
+                            }else if (i-1>=0  && map[i-1][j]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("U");
+                                //справа вверху
+                            } else if (i-1>=0 && j+1<=SIZE && map[i-1][j+1]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("UR");
+                                // слева
+                            } else if (j-1>=0  && map[i][j-1]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("L");
+                                // справа
+                            }else if (j+1<=SIZE  && map[i][j+1]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("R");
+                                // слева снизу
+                            } else if (i+1<=SIZE && j-1>=0  && map[i+1][j-1]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("LD");
+                                // снизу
+                            }else if (i+1<=SIZE && map[i-1][j]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("D");
+                                // снизу cправа
+                            } else if (i+1<=SIZE && j+1<=SIZE  && map[i-1][j+1]==DOT_O)
+                            {
+                                y=i;
+                                x=j;
+                                moveFound=true;
+                                System.out.println("RD");
+                            }
+                        }
+                        // если найдено подходящщее условие выходим из внутреннего цикла
+                        if (moveFound) {break;}
+                    } //и из внешнего
+                    if (moveFound) {break;}
                 }
+            }
+            if (x== -1)
+            {
+                do {
+                    x = random.nextInt(SIZE);
+                    y = random.nextInt(SIZE);
+                } while(!isCellValid(x, y));
+                System.out.println("RANDOM");
             }
         }
 
