@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 public class TicTacToe
@@ -8,7 +9,10 @@ public class TicTacToe
     private  static char DOT_EMPTY = '*'; // пустое поле
     private  static char DOT_X = 'X';   // символ Х игрока 1
     private  static char DOT_O = 'O';   //  символ О игрока 2
+    private static final boolean SILLY_MODE = false; // режим глупого/"умного" компьютера
     private static Scanner scanner = new Scanner(System.in); //считывание с клавиатуры
+    private static Random random = new Random();
+
 
     public static void main(String[] args)
     {
@@ -20,11 +24,10 @@ public class TicTacToe
             humanTurn(); //ход человека
             if(isEndGame(DOT_X)){ break;} // проверка окончания игры
 
-            //computerTurn(); // ход компьютера
-           // if(isEndGame(DOT_O)) {break;} // проверка окончания игры
+            computerTurn(); // ход компьютера
+            if(isEndGame(DOT_O)) {break;} // проверка окончания игры
         }
         System.out.println("Игра окончена");
-
 
     }
 
@@ -41,7 +44,8 @@ public class TicTacToe
     // вывод поля на экран
     private static void printMap() {
         for(int i = 0; i <= SIZE; i++){
-            System.out.print(i + "  ");
+            if (i==0)System.out.print("   ");
+            else System.out.print(i + "  ");
         }
         System.out.println();
 
@@ -66,31 +70,49 @@ public class TicTacToe
             y = scanner.nextInt() - 1; // Считывание номера строки
             x = scanner.nextInt() - 1; // Считывание номера столбца
         }
-        while (!isCellValid(x, y));
+        while (!isCellValid(x, y) );
 
         map[y][x] = DOT_X;
     }
 
+    private static void computerTurn()
+    {
+        int x = -1;
+        int y = -1;
+        if(SILLY_MODE){
+            do {
+                x = random.nextInt(SIZE);
+                y = random.nextInt(SIZE);
+            } while(!isCellValid(x, y));
+        }
+        else{
+            for(int i = 0; i < SIZE; i++){
+                for(int j = 0; j < SIZE; j++){
+                    // Проверяем клетки по направлениям
+                }
+            }
+        }
 
-    //проверка валидности введеных данных
+        System.out.println("Компьютер выбрал ячейку " + (y + 1) + " " + (x + 1));
+        map[y][x] = DOT_O;
+
+    }
 
     public static boolean isCellValid(int x, int y){
         boolean result = true;
 
-        //проверка координат
         if(x < 0 || x >= SIZE || y < 0 || y >= SIZE) {
             result = false;
         }
 
-        // проверка что ячейка пустая
-        // исключение выхода за пределы массива при некорректных координатах
-//        if(map[y][x] != DOT_EMPTY)
-//        {
-//            result = false;
-//        }
+        if(map[y][x] != DOT_EMPTY){
+            result = false;
+        }
 
         return result;
     }
+
+
 
     //Проверка окончания игры
 
@@ -114,6 +136,7 @@ public class TicTacToe
         return result;
     }
 
+    // проверка заполненности игрового поля
     private static boolean isMapFull()
     { boolean result=true;
 
@@ -127,9 +150,6 @@ public class TicTacToe
                 }
 
             }
-        }
-        {
-
         }
 
       return result;
@@ -151,9 +171,4 @@ public class TicTacToe
 
         return result;
     }
-
-
-
-
-
 }
